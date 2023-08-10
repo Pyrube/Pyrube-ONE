@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.pyrube.tao</groupId>
+  <artifactId>pyrube-one</artifactId>
+  <version>1.0.0-RELEASE</version>
+
+  <name>Pyrube-ONE</name>
+  <!-- FIXME change it to the project's website -->
+  <url>https://github.com/pyrube/pyrube-one</url>
+  <organization>
+  	<name>Pyrube</name>
+  	<url>https://github.com/pyrube</url>
+  </organization>
+  <licenses>
+  	<license>
+  		<name>Apache License, Version 2.0</name>
+  		<url>https://www.apache.org/licenses/LICENSE-2.0</url>
+  		<distribution>repo</distribution>
+  	</license>
+  </licenses>
+  <developers>
+  	<developer>
+  		<id>Pyrube</id>
+  		<name>Aranjuez Poon</name>
+  		<email>pyrube.one@outlook.com</email>
+  	</developer>
+  </developers>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <apache-log4j.version>1.2.17</apache-log4j.version>
+    <apache-xalan.version>2.7.2</apache-xalan.version>
+    <spring.version>5.1.7.RELEASE</spring.version>
+    <hibernate.version>5.2.6.Final</hibernate.version>
+    <mysql.version>5.1.32</mysql.version>
+  </properties>
+
+  <build>
+    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+      <plugins>
+        <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
+        <plugin>
+          <artifactId>maven-clean-plugin</artifactId>
+          <version>3.1.0</version>
+        </plugin>
+        <!-- default lifecycle, jar packaging: see https://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging -->
+        <plugin>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>3.0.2</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.8.0</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>2.22.1</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>3.0.2</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-install-plugin</artifactId>
+          <version>2.5.2</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>2.8.2</version>
+        </plugin>
+        <!-- site lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#site_Lifecycle -->
+        <plugin>
+          <artifactId>maven-site-plugin</artifactId>
+          <version>3.7.1</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-project-info-reports-plugin</artifactId>
+          <version>3.0.0</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+  <dependencies>
+  	<dependency>
+  		<groupId>log4j</groupId>
+  		<artifactId>log4j</artifactId>
+  		<version>${apache-log4j.version}</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>xalan</groupId>
+  		<artifactId>xalan</artifactId>
+  		<version>${apache-xalan.version}</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.springframework</groupId>
+  		<artifactId>spring-context</artifactId>
+  		<version>${spring.version}</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.springframework</groupId>
+  		<artifactId>spring-context-support</artifactId>
+  		<version>${spring.version}</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.hibernate</groupId>
+  		<artifactId>hibernate-core</artifactId>
+  		<version>${hibernate.version}</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>mysql</groupId>
+  		<artifactId>mysql-connector-java</artifactId>
+  		<version>${mysql.version}</version>
+  	</dependency>
+  </dependencies>
+</project>
