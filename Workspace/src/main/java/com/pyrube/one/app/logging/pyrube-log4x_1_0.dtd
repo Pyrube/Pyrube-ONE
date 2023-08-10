@@ -1,0 +1,230 @@
+<!--
+     DTD for the Pyrube Log4x Configuration File
+
+     To support log4x of your configuration file, include the following
+     DOCTYPE element at the beginning (after the "xml" declaration):
+
+     <!DOCTYPE pyrube-log4x PUBLIC
+       "-//Pyrube Team//DTD Log4x Configuration 1.0//EN"
+       "dtds/pyrube-log4x_1_0.dtd">
+-->
+<!-- Authors: Aranjuez -->
+<!-- Version: 1.0 -->
+
+<!-- ========== Defined Types ============================================= -->
+<!-- An "ParamName" is the identifier of a page, request, session, or
+     application scope attribute.
+-->
+<!ENTITY % ParamName "CDATA">
+
+
+<!-- A "ParamValue" is the name of a JavaBeans property, and must begin with
+     a lower case letter and contain only characters that are legal in a
+     Java identifier.
+-->
+<!ENTITY % ParamValue "CDATA">
+
+
+<!-- ========== Top Level Elements ======================================== -->
+<!-- The "pyrube-config" element is the root of the configuration file
+     hierarchy, and contains nested elements for all of the other
+     configuration settings.
+-->
+<!ELEMENT pyrube-config (parameters?, config-content)>
+<!ATTLIST pyrube-config  id             ID              #IMPLIED>
+
+
+<!-- The "parameters" element describes all constant parameters used for 
+     configuration content.
+-->
+<!ELEMENT parameters (param*)>
+<!ATTLIST parameters  id             ID              #IMPLIED>
+
+
+<!-- The "param" element describes a parameter information, it has a pair of 
+     name and value as a constant variable. The following attributes are 
+     defined:
+
+     name            The parameter name is used as a constant variable for 
+                     configuration content to find value. 
+                     
+                     For example: ${PYRUBE_SAMPLE}
+
+     value           The parameter value is used to replace the parameter name 
+                     in use.
+-->
+<!ELEMENT param (#PCDATA)>
+<!ATTLIST param  id             ID              #IMPLIED>
+<!ATTLIST param  name           %ParamName;     #REQUIRED>
+<!ATTLIST param  value          %ParamValue;    #IMPLIED>
+
+
+<!-- The "config-content" element describes the configuration content for 
+     Log4x.
+-->
+<!ELEMENT config-content (log4x)>
+<!ATTLIST config-content  id             ID              #IMPLIED>
+
+
+<!-- The "log4x" element describes the configuration content for Log4x.
+-->
+<!ELEMENT log4x (log4j:configuration)>
+<!ATTLIST log4x  id             ID              #IMPLIED>
+
+
+<!-- ==================================================================== -->
+<!--    the following refer to log4j dtd from Apache                      -->
+<!-- ==================================================================== -->
+<!-- A configuration element consists of optional renderer
+elements,appender elements, categories and an optional root
+element. -->
+
+<!ELEMENT log4j:configuration (renderer*, appender*,plugin*, (category|logger)*,root?,
+                               (categoryFactory|loggerFactory)?)>
+
+<!-- The "threshold" attribute takes a level value below which -->
+<!-- all logging statements are disabled. -->
+
+<!-- Setting the "debug" enable the printing of internal log4j logging   -->
+<!-- statements.                                                         -->
+
+<!-- By default, debug attribute is "null", meaning that we not do touch -->
+<!-- internal log4j logging settings. The "null" value for the threshold -->
+<!-- attribute can be misleading. The threshold field of a repository	 -->
+<!-- cannot be set to null. The "null" value for the threshold attribute -->
+<!-- simply means don't touch the threshold field, the threshold field   --> 
+<!-- keeps its old value.                                                -->
+     
+<!ATTLIST log4j:configuration
+  xmlns:log4j              CDATA #FIXED "http://jakarta.apache.org/log4j/" 
+  threshold                (all|trace|debug|info|warn|error|fatal|off|null) "null"
+  debug                    (true|false|null)  "null"
+  reset                    (true|false) "false"
+>
+
+<!-- renderer elements allow the user to customize the conversion of  -->
+<!-- message objects to String.                                       -->
+
+<!ELEMENT renderer EMPTY>
+<!ATTLIST renderer
+  renderedClass  CDATA #REQUIRED
+  renderingClass CDATA #REQUIRED
+>
+
+<!-- Appenders must have a name and a class. -->
+<!-- Appenders may contain an error handler, a layout, optional parameters -->
+<!-- and filters. They may also reference (or include) other appenders. -->
+<!ELEMENT appender (errorHandler?, param*,
+      rollingPolicy?, triggeringPolicy?, connectionSource?,
+      layout?, filter*, appender-ref*)>
+<!ATTLIST appender
+  name 		CDATA 	#REQUIRED
+  class 	CDATA	#REQUIRED
+>
+
+<!ELEMENT layout (param*)>
+<!ATTLIST layout
+  class		CDATA	#REQUIRED
+>
+
+<!ELEMENT filter (param*)>
+<!ATTLIST filter
+  class		CDATA	#REQUIRED
+>
+
+<!-- ErrorHandlers can be of any class. They can admit any number of -->
+<!-- parameters. -->
+
+<!ELEMENT errorHandler (param*, root-ref?, logger-ref*,  appender-ref?)> 
+<!ATTLIST errorHandler
+   class        CDATA   #REQUIRED 
+>
+
+<!ELEMENT root-ref EMPTY>
+
+<!ELEMENT logger-ref EMPTY>
+<!ATTLIST logger-ref
+  ref CDATA #REQUIRED
+>
+
+
+<!-- The priority class is org.apache.log4j.Level by default -->
+<!ELEMENT priority (param*)>
+<!ATTLIST priority
+  class   CDATA	#IMPLIED
+  value	  CDATA #REQUIRED
+>
+
+<!-- The level class is org.apache.log4j.Level by default -->
+<!ELEMENT level (param*)>
+<!ATTLIST level
+  class   CDATA	#IMPLIED
+  value	  CDATA #REQUIRED
+>
+
+
+<!-- If no level element is specified, then the configurator MUST not -->
+<!-- touch the level of the named category. -->
+<!ELEMENT category (param*,(priority|level)?,appender-ref*)>
+<!ATTLIST category
+  class         CDATA   #IMPLIED
+  name		CDATA	#REQUIRED
+  additivity	(true|false) "true"  
+>
+
+<!-- If no level element is specified, then the configurator MUST not -->
+<!-- touch the level of the named logger. -->
+<!ELEMENT logger (level?,appender-ref*)>
+<!ATTLIST logger
+  name		CDATA	#REQUIRED
+  additivity	(true|false) "true"  
+>
+
+
+<!ELEMENT categoryFactory (param*)>
+<!ATTLIST categoryFactory 
+   class        CDATA #REQUIRED>
+
+<!ELEMENT loggerFactory (param*)>
+<!ATTLIST loggerFactory
+   class        CDATA #REQUIRED>
+
+<!ELEMENT appender-ref EMPTY>
+<!ATTLIST appender-ref
+  ref CDATA #REQUIRED
+>
+
+<!-- plugins must have a name and class and can have optional parameters -->
+<!ELEMENT plugin (param*, connectionSource?)>
+<!ATTLIST plugin
+  name 		CDATA 	   #REQUIRED
+  class 	CDATA  #REQUIRED
+>
+
+<!ELEMENT connectionSource (dataSource?, param*)>
+<!ATTLIST connectionSource
+  class        CDATA  #REQUIRED
+>
+
+<!ELEMENT dataSource (param*)>
+<!ATTLIST dataSource
+  class        CDATA  #REQUIRED
+>
+
+<!ELEMENT triggeringPolicy ((param|filter)*)>
+<!ATTLIST triggeringPolicy
+  name 		CDATA  #IMPLIED
+  class 	CDATA  #REQUIRED
+>
+
+<!ELEMENT rollingPolicy (param*)>
+<!ATTLIST rollingPolicy
+  name 		CDATA  #IMPLIED
+  class 	CDATA  #REQUIRED
+>
+
+
+<!-- If no priority element is specified, then the configurator MUST not -->
+<!-- touch the priority of root. -->
+<!-- The root category always exists and cannot be subclassed. -->
+<!ELEMENT root (param*, (priority|level)?, appender-ref*)>
