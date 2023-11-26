@@ -35,6 +35,7 @@ import com.pyrube.one.app.i18n.format.FormatManager;
 import com.pyrube.one.app.i18n.locale.AppLocaleManager;
 import com.pyrube.one.app.logging.Logger;
 import com.pyrube.one.app.memo.Note;
+import com.pyrube.one.app.persistence.Data;
 import com.pyrube.one.app.security.AppPolicy;
 import com.pyrube.one.app.security.SecurityManagerFactory;
 import com.pyrube.one.app.user.User;
@@ -64,6 +65,18 @@ public class Apps {
 	 * @since Pyrube-ONE 1.0
 	 */
 	public static class a {
+		/**
+		 * returns a <code>Data</code> instance of a given class
+		 * @return <code>Data</code>
+		 */
+		public static <D extends Data<?>> D data(Class<D> clz) {
+			try {
+				return clz.newInstance();
+			} catch (InstantiationException | IllegalAccessException e) {
+				throw Apps.an.exception.due(e);
+			}
+		}
+
 		/** application logger */
 		public static class logger {
 			/**
@@ -1177,6 +1190,11 @@ public class Apps {
 			 * @return TimeZone
 			 */
 			public static TimeZone timezone() { return UserHolder.getUser().timezone(); }
+			/**
+			 * returns the country code of current login user
+			 * @return TimeZone
+			 */
+			public static String country() { return UserHolder.getUser().country(); }
 		}
 
 		/**
