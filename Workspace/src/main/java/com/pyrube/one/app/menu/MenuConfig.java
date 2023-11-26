@@ -34,7 +34,7 @@ import com.pyrube.one.lang.Strings;
  * <pre>
  * <![CDATA[
  *   <MenuConfig>
- *     <items>
+ *     <menu>
  *       <item>menu.item1
  *         <item action="/action11" mode="forward" queryString="param11=param11Value" icon="icon11" access="hasAuthority('right11')">menu.item11</item>
  *         <item action="/action12" mode="redirect" icon="icon12" access="hasAnyAuthority('right121', 'right122', 'right123')">menu.item12</item>
@@ -53,7 +53,11 @@ import com.pyrube.one.lang.Strings;
  *         <item action="/action22" access="hasAuthority('right22')">menu.item12</item>
  *       </item>
  *       <item action="/action31" access="hasAuthority('right31')">menu.item31</item>
- *     </items>
+ *     </menu>
+ *     <navMenu>
+ *       <item action="/nav1" icon="icon1">nav.item1</item>
+ *       <item action="/nav2" icon="icon2">nav.item2</item>
+ *     </navMenu>
  *   </MenuConfig>
  * ]]>
  * </pre>
@@ -69,11 +73,6 @@ public class MenuConfig extends Configurator {
 	 */
 	private static Logger logger = Logger.getInstance(MenuConfig.class.getName());
 
-	/**
-	 * Menu structure, a list of level-1 menu items
-	 */
-	private List<MenuItem> items = null;
-	
 	/**
 	 * configurator of Menu
 	 */
@@ -108,14 +107,24 @@ public class MenuConfig extends Configurator {
 	 * @see com.pyrube.one.app.config.Configurator#loadConfig(String, Node)
 	 */
 	public final void loadConfig(String cfgName, Node cfgNode) throws AppException {
-		items = new ArrayList<MenuItem>();
-		NodeList itemNodes = ConfigManager.getNodeList(cfgNode, "items/item");
-		if (itemNodes == null) return;
-		for (int i = 0; i < itemNodes.getLength(); ++i) {
-			MenuItem mi = obtainItem("mi" + String.valueOf(i + 1), MenuItem.ROOT, itemNodes.item(i));
-			if (mi != null) items.add(mi);
+		NodeList itemNodes = ConfigManager.getNodeList(cfgNode, "menu/item");
+		if (itemNodes != null) {
+			List<MenuItem> items = new ArrayList<MenuItem>();
+			for (int i = 0; i < itemNodes.getLength(); ++i) {
+				MenuItem mi = obtainItem("mi" + String.valueOf(i + 1), MenuItem.MENU_ROOT, itemNodes.item(i));
+				if (mi != null) items.add(mi);
+			}
+			MenuItem.MENU_ROOT.setSubs(items);
 		}
-		MenuItem.ROOT.setSubs(items);
+		itemNodes = ConfigManager.getNodeList(cfgNode, "navMenu/item");
+		if (itemNodes != null) {
+			List<MenuItem> navItems = new ArrayList<MenuItem>();
+			for (int i = 0; i < itemNodes.getLength(); ++i) {
+				MenuItem mi = obtainItem("ni" + String.valueOf(i + 1), MenuItem.NAV_ROOT, itemNodes.item(i));
+				if (mi != null) navItems.add(mi);
+			}
+			MenuItem.NAV_ROOT.setSubs(navItems);
+		}
 	}
 
 	/**

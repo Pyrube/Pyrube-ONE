@@ -35,9 +35,14 @@ public class MenuItem implements Serializable {
 	private static final long serialVersionUID = 5477810421675115151L;
 	
 	/**
-	 * the ROOT menu item
+	 * the MENU_ROOT menu item
 	 */
-	public static MenuItem ROOT = new MenuItem(MenuItem.class.getName(), "menu.ROOT");
+	public static MenuItem MENU_ROOT = new MenuItem(MenuItem.class.getName() + "_MENU", "menu.ROOT");
+	
+	/**
+	 * the NAV_ROOT menu item
+	 */
+	public static MenuItem NAV_ROOT = new MenuItem(MenuItem.class.getName() + "_NAV", "nav.ROOT");
 
 	/**
 	 * menu id
