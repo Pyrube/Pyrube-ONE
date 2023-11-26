@@ -111,6 +111,12 @@ public class User implements Serializable {
 	private TimeZone timezone = null;
 
 	/**
+	 * the theme that user currently is using. its default value is set
+	 * based on setting for user
+	 */
+	private String theme = null;
+
+	/**
 	 * the last log-on time (GMT00) when user logs-on successfully
 	 */
 	private Date lastLogonTime = null;
@@ -247,6 +253,22 @@ public class User implements Serializable {
 	 */
 	public TimeZone timezone() {
 		return timezone;
+	}
+
+	/**
+	 * returns the user theme
+	 * @return String
+	 */
+	public String theme() {
+		return theme;
+	}
+
+	/**
+	 * returns the user country
+	 * @return String
+	 */
+	public String country() {
+		return country;
 	}
 
 	/**
@@ -403,6 +425,20 @@ public class User implements Serializable {
 	 */
 	public void setTimezone(TimeZone timezone) {
 		this.timezone = timezone;
+	}
+
+	/**
+	 * @return the theme
+	 */
+	public String getTheme() {
+		return theme;
+	}
+
+	/**
+	 * @param theme the theme to set
+	 */
+	public void setTheme(String theme) {
+		this.theme = theme;
 	}
 
 	/**
