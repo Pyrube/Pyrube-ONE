@@ -63,7 +63,12 @@ public class SecurityStatus implements Serializable {
 	/**
 	 * user is not found.
 	 */
-	public static final SecurityStatus NOT_FOUND = new SecurityStatus(21);
+	public static final SecurityStatus NOT_FOUND = new SecurityStatus(20);
+
+	/**
+	 * user already exists.
+	 */
+	public static final SecurityStatus DUPLICATED = new SecurityStatus(21);
 
 	/**
 	 * user is not active yet. pending for activation
@@ -98,21 +103,21 @@ public class SecurityStatus implements Serializable {
 	/**
 	 * status code
 	 */
-	private Integer statusCode = null;
+	private Integer code = null;
 
 	/**
 	 * constructor
-	 * @param statusCode is the status code
+	 * @param code is the status code
 	 */
-	private SecurityStatus(Integer statusCode) {
-		this.statusCode = statusCode;
+	private SecurityStatus(Integer code) {
+		this.code = code;
 	}
 
 	/**
-	 * @return the statusCode
+	 * @return the code
 	 */
-	public Integer getStatusCode() {
-		return statusCode;
+	public Integer getCode() {
+		return code;
 	}
 
 	/**
@@ -121,14 +126,14 @@ public class SecurityStatus implements Serializable {
 	 * @return boolean
 	 */
 	public boolean equals(Integer status) {
-		return this.statusCode == status;
+		return this.code == status;
 	}
 
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	public boolean equals(Object other) {
-		if (other instanceof SecurityStatus) return(this.equals(((SecurityStatus) other).statusCode));
+		if (other instanceof SecurityStatus) return(this.equals(((SecurityStatus) other).code));
 		else return(false);
 	}
 }
