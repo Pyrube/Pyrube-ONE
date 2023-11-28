@@ -1,4 +1,4 @@
-Pyrube-ONE 1.0.0-RELEASE
+Pyrube-ONE 1.1.0-RELEASE
 Copyright (c) 2019-2023 Aranjuez Poon.
 
 This product is licensed to you under the Apache License, Version 2.0
