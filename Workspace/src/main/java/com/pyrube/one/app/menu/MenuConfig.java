@@ -116,15 +116,29 @@ public class MenuConfig extends Configurator {
 			}
 			MenuItem.MENU_ROOT.setSubs(items);
 		}
-		itemNodes = ConfigManager.getNodeList(cfgNode, "navMenu/item");
+		// navigation menus
+		itemNodes = ConfigManager.getNodeList(cfgNode, "navMenu/appNav/item");
+		MenuItem APP_NAV = new MenuItem("nav_APP", "nav.APP");
 		if (itemNodes != null) {
 			List<MenuItem> navItems = new ArrayList<MenuItem>();
 			for (int i = 0; i < itemNodes.getLength(); ++i) {
-				MenuItem mi = obtainItem("ni" + String.valueOf(i + 1), MenuItem.NAV_ROOT, itemNodes.item(i));
-				if (mi != null) navItems.add(mi);
+				MenuItem ni = obtainItem("ni_app_" + String.valueOf(i + 1), APP_NAV, itemNodes.item(i));
+				if (ni != null) navItems.add(ni);
 			}
-			MenuItem.NAV_ROOT.setSubs(navItems);
+			APP_NAV.setSubs(navItems);
 		}
+		MenuItem.NAV_ROOT.addSub(APP_NAV);
+		itemNodes = ConfigManager.getNodeList(cfgNode, "navMenu/mainNav/item");
+		MenuItem MAIN_NAV = new MenuItem("nav_MAIN", "nav.MAIN");
+		if (itemNodes != null) {
+			List<MenuItem> navItems = new ArrayList<MenuItem>();
+			for (int i = 0; i < itemNodes.getLength(); ++i) {
+				MenuItem ni = obtainItem("ni_main_" + String.valueOf(i + 1), MAIN_NAV, itemNodes.item(i));
+				if (ni != null) navItems.add(ni);
+			}
+			MAIN_NAV.setSubs(navItems);
+		}
+		MenuItem.NAV_ROOT.addSub(MAIN_NAV);
 	}
 
 	/**
