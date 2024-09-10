@@ -151,7 +151,12 @@ public class FormatManager {
 	 * Number Format name of Money with three decimals. i.e. "#,##0.000"
 	 */
 	public static final String NFN_MONEY3 = "money3";
-	
+
+	/**
+	 * Number Format name of Number Place in Words. i.e. "#${g3}#${p2}#${p1}#${g2}#${p2}#${p1}#${g1}#${p2}#${p1}0.#"
+	 */
+	public static final String NFN_PLACEINWORDS = "piw";
+
 	/**
 	 * the locale-based format builders. 
 	 * key=localeCode, value=Map {key=category (date/number), value=FormatBuilder}
