@@ -59,6 +59,18 @@ public class Apps {
 	private Apps() {}
 
 	/**
+	 * <code>constants</code> is for general application constants
+	 * 
+	 * @author Aranjuez
+	 * @since Pyrube-ONE 1.0
+	 */
+	public static class constants {
+		/** application constants */
+		public static final String YES = AppConstants.YES;
+		public static final String NO  = AppConstants.NO;
+	}
+
+	/**
 	 * <code>a</code> is for one instance of <code>Pyrube-ONE</code> object
 	 * 
 	 * @author Aranjuez
@@ -391,6 +403,22 @@ public class Apps {
 			 */
 			public String format(String localeCode, String nameOrPattern) {
 				return FormatManager.dateFormatOf(localeCode, nameOrPattern).format(this.value());
+			}
+
+			/**
+			 * returns the year of this <code>Apps.a.date</code>.
+			 * @return int
+			 */
+			public int year() {
+				return(Dates.getYear(this.value()));
+			}
+
+			/**
+			 * returns the natural month of this <code>Apps.a.date</code>.
+			 * @return int
+			 */
+			public int month() {
+				return(Dates.getMonth(this.value()));
 			}
 
 			/**
@@ -1521,6 +1549,8 @@ public class Apps {
 				public static final String MONEY2 = FormatManager.NFN_MONEY2;
 				/** Number Format name of Money with three decimals. i.e. "#,##0.000" */
 				public static final String MONEY3 = FormatManager.NFN_MONEY3;
+				/** Number Format name of Number Place in Words. i.e. "#${g3}#${p2}#${p1}#${g2}#${p2}#${p1}#${g1}#${p2}#${p1}0.#" */
+				public static final String PLACEINWORDS = FormatManager.NFN_PLACEINWORDS;
 			}
 		}
 
