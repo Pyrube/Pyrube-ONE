@@ -1539,6 +1539,16 @@ public class Apps {
 				public static final String INTEGER = FormatManager.NFN_INTEGER;
 				/** Number Format name of Float. i.e. "#0.0##############" */
 				public static final String FLOAT = FormatManager.NFN_FLOAT;
+				/** Number Format name of Percent. i.e. "#0.#%" */
+				public static final String PERCENT = FormatManager.NFN_PERCENT;
+				/** Number Format name of Percent without decimals. i.e. "#0%" */
+				public static final String PERCENT0 = FormatManager.NFN_PERCENT0;
+				/** Number Format name of Percent with one decimal. i.e. "#0.0%" */
+				public static final String PERCENT1 = FormatManager.NFN_PERCENT1;
+				/** Number Format name of Percent with two decimals. i.e. "#0.00%" */
+				public static final String PERCENT2 = FormatManager.NFN_PERCENT2;
+				/** Number Format name of Amount. i.e. "#0.00#" */
+				public static final String AMOUNT = FormatManager.NFN_AMOUNT;
 				/** Number Format name of Money. i.e. "#,##0.00#" */
 				public static final String MONEY = FormatManager.NFN_MONEY;
 				/** Number Format name of Money without decimals. i.e. "#,##0" */
