@@ -128,6 +128,31 @@ public class FormatManager {
 	public static final String NFN_FLOAT = "float";
 	
 	/**
+	 * Number Format name of Percent. i.e. "#0.#%"
+	 */
+	public static final String NFN_PERCENT = "percent";
+	
+	/**
+	 * Number Format name of Percent without decimals. i.e. "#0%"
+	 */
+	public static final String NFN_PERCENT0 = "percent0";
+	
+	/**
+	 * Number Format name of Percent with one decimal. i.e. "#0.0%"
+	 */
+	public static final String NFN_PERCENT1 = "percent1";
+	
+	/**
+	 * Number Format name of Percent with two decimals. i.e. "#0.00%"
+	 */
+	public static final String NFN_PERCENT2 = "percent2";
+	
+	/**
+	 * Number Format name of Amount. i.e. "#0.00#"
+	 */
+	public static final String NFN_AMOUNT = "amount";
+	
+	/**
 	 * Number Format name of Money. i.e. "#,##0.00#"
 	 */
 	public static final String NFN_MONEY = "money";
