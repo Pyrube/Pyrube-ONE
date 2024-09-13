@@ -23,7 +23,6 @@ package com.pyrube.one.util;
  * @author Aranjuez
  * @version Dec 01, 2009
  * @since Pyrube-ONE 1.0
- *
  */
 public class Currency {
 	/**
@@ -31,7 +30,12 @@ public class Currency {
 	 */
 	private String code;
 	/**
-	 *  The scale of this currency
+	 * The precision of this currency
+	 */
+	private Integer precision;
+	/**
+	 * The scale of this currency
+	 * @deprecated use precision instead
 	 */
 	private Integer scale;
 	/**
@@ -50,21 +54,22 @@ public class Currency {
 	/**
 	 * Constructor
 	 * @param code
-	 * @param scale
+	 * @param precision
 	 */
-	public Currency(String code, Integer scale) {
-		this(code, scale, null);
+	public Currency(String code, Integer precision) {
+		this(code, precision, null);
 	}
 	
 	/**
 	 * Constructor
 	 * @param code
-	 * @param scale
+	 * @param precision
 	 * @param calcBasis
 	 */
-	public Currency(String code, Integer scale, String calcBasis) {
+	public Currency(String code, Integer precision, String calcBasis) {
 		this.code = code;
-		this.scale = scale;
+		this.precision = precision;
+		this.scale = precision;
 		this.calcBasis = calcBasis;
 	}
 
@@ -83,7 +88,22 @@ public class Currency {
 	}
 
 	/**
+	 * @return the precision
+	 */
+	public Integer getPrecision() {
+		return precision;
+	}
+
+	/**
+	 * @param precision the precision to set
+	 */
+	public void setPrecision(Integer precision) {
+		this.precision = precision;
+	}
+
+	/**
 	 * @return the scale
+	 * @deprecated
 	 */
 	public Integer getScale() {
 		return scale;
@@ -91,6 +111,7 @@ public class Currency {
 
 	/**
 	 * @param scale the scale to set
+	 * @deprecated
 	 */
 	public void setScale(Integer scale) {
 		this.scale = scale;
