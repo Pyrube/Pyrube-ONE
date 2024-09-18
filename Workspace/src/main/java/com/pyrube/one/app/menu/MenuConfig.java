@@ -55,8 +55,20 @@ import com.pyrube.one.lang.Strings;
  *       <item action="/action31" access="hasAuthority('right31')">menu.item31</item>
  *     </menu>
  *     <navMenu>
- *       <item action="/nav1" icon="icon1">nav.item1</item>
- *       <item action="/nav2" icon="icon2">nav.item2</item>
+ *       <appNav>
+ *         <item action="/nav1" icon="icon1">nav.item1</item>
+ *         <item action="/nav2" icon="icon2">nav.item2</item>
+ *       </appNav>
+ *       <mainNav>
+ *         <item action="/nav3" icon="icon3">nav.item3</item>
+ *         <item action="/nav4" icon="icon4">nav.item4</item>
+ *       </mainNav>
+ *       <funcNav>
+ *         <item name="funcname">
+ *           <item action="/funcname/nav5" icon="icon5">nav.item5</item>
+ *           <item action="/funcname/nav6" icon="icon6">nav.item6</item>
+ *         </item>
+ *       </funcNav>
  *     </navMenu>
  *   </MenuConfig>
  * ]]>
@@ -139,6 +151,19 @@ public class MenuConfig extends Configurator {
 			MAIN_NAV.setSubs(navItems);
 		}
 		MenuItem.NAV_ROOT.addSub(MAIN_NAV);
+		itemNodes = ConfigManager.getNodeList(cfgNode, "navMenu/funcNav/item");
+		MenuItem FUNC_NAV = new MenuItem("nav_FUNC", "nav.FUNC");
+		if (itemNodes != null) {
+			List<MenuItem> navItems = new ArrayList<MenuItem>();
+			for (int i = 0; i < itemNodes.getLength(); ++i) {
+				Node itemNode = itemNodes.item(i);
+				String funcname = ConfigManager.getSingleValue(itemNode, ".");
+				MenuItem ni = obtainItem("ni_func_" + funcname, FUNC_NAV, itemNode);
+				if (ni != null) navItems.add(ni);
+			}
+			FUNC_NAV.setSubs(navItems);
+		}
+		MenuItem.NAV_ROOT.addSub(FUNC_NAV);
 	}
 
 	/**
