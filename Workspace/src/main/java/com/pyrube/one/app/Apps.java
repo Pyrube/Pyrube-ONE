@@ -106,7 +106,8 @@ public class Apps {
 		 * returns a <code>Apps.a.locale</code> of a given locale
 		 * @return <code>Apps.a.locale</code>
 		 */
-		public static locale locale(Locale locale) { return new a.locale(locale); }
+		public static locale locale(String localeCode) { return new a.locale(localeCode); }
+		public static locale locale(Locale locale)     { return new a.locale(locale); }
 		/** application locale */
 		public static class locale {
 			/**
@@ -266,7 +267,15 @@ public class Apps {
 				this.in = new in();
 				this.to = new to();
 			}
-			
+
+			/**
+			 * @param dataType String
+			 * @param dataId Long
+			 * @return Note
+			 */
+			public note of(String dataType, Long dataId) {
+				return(of(dataType, String.valueOf(dataId), null));
+			}
 			/**
 			 * @param dataType String
 			 * @param dataId Long
@@ -275,6 +284,14 @@ public class Apps {
 			 */
 			public note of(String dataType, Long dataId, String dataStatus) {
 				return(of(dataType, String.valueOf(dataId), dataStatus));
+			}
+			/**
+			 * @param dataType String
+			 * @param dataId String
+			 * @return Note
+			 */
+			public note of(String dataType, String dataId) {
+				return(of(dataType, dataId, null));
 			}
 			/**
 			 * @param dataType String
@@ -559,7 +576,7 @@ public class Apps {
 				 * @return <code>Apps.a.date.format</code>
 				 */
 				public static format of(String nameOrPattern) {
-					return of(null, nameOrPattern, (TimeZone) null);
+					return of((String) null, nameOrPattern, (TimeZone) null);
 				}
 				/**
 				 * return a <code>date.format</code> for the user/default locale and pre-defined name or pattern.
@@ -568,7 +585,25 @@ public class Apps {
 				 * @return <code>Apps.a.date.format</code>
 				 */
 				public static format of(String nameOrPattern, TimeZone z) {
-					return of(null, nameOrPattern, z);
+					return of((String) null, nameOrPattern, z);
+				}
+				/**
+				 * returns a <code>date.format</code> for a given locale and pre-defined name or pattern.
+				 * @param locale <code>Apps.a.locale</code>
+				 * @param nameOrPattern String
+				 * @return <code>Apps.a.date.format</code>
+				 */
+				public static format of(a.locale locale, String nameOrPattern) {
+					return of(locale.value(), nameOrPattern);
+				}
+				/**
+				 * returns a <code>date.format</code> for a given locale and pre-defined name or pattern.
+				 * @param locale Locale
+				 * @param nameOrPattern String
+				 * @return <code>Apps.a.date.format</code>
+				 */
+				public static format of(Locale locale, String nameOrPattern) {
+					return of(locale.toString(), nameOrPattern);
 				}
 				/**
 				 * returns a <code>date.format</code> for a given locale and pre-defined name or pattern.
@@ -581,6 +616,26 @@ public class Apps {
 				}
 				/**
 				 * returns a <code>date.format</code> for a given locale and pre-defined name or pattern.
+				 * @param locale <code>Apps.a.locale</code>
+				 * @param nameOrPattern String
+				 * @param z TimeZone
+				 * @return <code>Apps.a.date.format</code>
+				 */
+				public static format of(a.locale locale, String nameOrPattern, TimeZone z) {
+					return of(locale.value(), nameOrPattern, z);
+				}
+				/**
+				 * returns a <code>date.format</code> for a given locale and pre-defined name or pattern.
+				 * @param locale Locale
+				 * @param nameOrPattern String
+				 * @param z TimeZone
+				 * @return <code>Apps.a.date.format</code>
+				 */
+				public static format of(Locale locale, String nameOrPattern, TimeZone z) {
+					return of(locale.toString(), nameOrPattern, z);
+				}
+				/**
+				 * returns a <code>date.format</code> for a given locale and pre-defined name or pattern.
 				 * @param localeCode String
 				 * @param nameOrPattern String
 				 * @param z TimeZone
@@ -590,6 +645,14 @@ public class Apps {
 					return new a.date.format(localeCode, nameOrPattern, z);
 				}
 
+				/**
+				 * formats a <code>Apps.a.date</code> into a date/time string
+				 * @param date <code>Apps.a.date</code>
+				 * @return String
+				 */
+				public String format(a.date date) {
+					return format(date.value());
+				}
 				/**
 				 * formats a <code>Date</code> into a date/time string
 				 * @param date Date
@@ -886,7 +949,25 @@ public class Apps {
 				 * @param nameOrPattern String
 				 * @return <code>Apps.a.number.format</code>
 				 */
-				public static format of(String nameOrPattern) { return of(null, nameOrPattern); }
+				public static format of(String nameOrPattern) { return of((String) null, nameOrPattern); }
+				/**
+				 * returns a <code>number.format</code> for a given locale and pre-defined name or pattern.
+				 * @param locale <code>Apps.a.locale</code>
+				 * @param nameOrPattern String
+				 * @return <code>Apps.a.number.format</code>
+				 */
+				public static format of(a.locale locale, String nameOrPattern) {
+					return of(locale.value(), nameOrPattern);
+				}
+				/**
+				 * returns a <code>number.format</code> for a given locale and pre-defined name or pattern.
+				 * @param locale Locale
+				 * @param nameOrPattern String
+				 * @return <code>Apps.a.number.format</code>
+				 */
+				public static format of(Locale locale, String nameOrPattern) {
+					return of(locale.toString(), nameOrPattern);
+				}
 				/**
 				 * returns a <code>number.format</code> for a given locale and pre-defined name or pattern.
 				 * @param localeCode String
@@ -897,6 +978,14 @@ public class Apps {
 					return new a.number.format(localeCode, nameOrPattern);
 				}
 
+				/**
+				 * formats a <code>Apps.a.number</code> into a number string
+				 * @param number <code>Apps.a.number</code>
+				 * @return String
+				 */
+				public String format(a.number number) {
+					return format(number.value());
+				}
 				/**
 				 * formats a <code>Number</code> into a number string
 				 * @param number Number
