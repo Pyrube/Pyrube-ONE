@@ -26,6 +26,7 @@ public interface AppConstants {
 	/**
 	 * constants for property name configured in AppConfig
 	 */
+	public static final String APPCONF_FIRST_FISCALMONTH = "FIRST_FISCALMONTH";
 	public static final String APPCONF_SETUP_DUALCONTROL = "SETUP_DUALCONTROL";
 	
 	/**
