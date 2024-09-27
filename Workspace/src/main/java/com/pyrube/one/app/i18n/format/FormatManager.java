@@ -118,6 +118,11 @@ public class FormatManager {
 	public static final String DFN_SHORTTIME = "shortTime";
 	
 	/**
+	 * Number Format name of Number. i.e. "#.#"
+	 */
+	public static final String NFN_NUMBER = "number";
+	
+	/**
 	 * Number Format name of Integer. i.e. "#0", "#,##0"
 	 */
 	public static final String NFN_INTEGER = "integer";
