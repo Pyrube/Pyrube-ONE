@@ -65,9 +65,44 @@ public class Apps {
 	 * @since Pyrube-ONE 1.0
 	 */
 	public static class constants {
+
 		/** application constants */
 		public static final String YES = AppConstants.YES;
 		public static final String NO  = AppConstants.NO;
+
+		/** used for general status constants */
+		public static class stat {
+
+			/** data added/modified/removed */
+			public static final String ADDED    = AppConstants.DATA_STAT_ADDED;
+			public static final String MODIFIED = AppConstants.DATA_STAT_MODIFIED;
+			public static final String REMOVED  = AppConstants.DATA_STAT_REMOVED;
+		}
+	}
+
+	/**
+	 * application config utilities
+	 * 
+	 * @author Aranjuez
+	 * @since Pyrube-ONE 1.0
+	 */
+	public static class config {
+
+		/**
+		 * returns the given application property
+		 * @param propName the property name. it could be a slash (/) separated path if it is in a hierarchy. i.e. commProps/host
+		 * @return Object the value of the property. it could be String, List or Map.
+		 */
+		public static Object property(String propName) {
+			return AppConfig.getAppConfig().getAppProperty(propName);
+		}
+		/**
+		 * returns all application config properties
+		 * @return Map
+		 */
+		public static Map<String, ?> properties() {
+			return AppConfig.getAppConfig().getAppProperties();
+		}
 	}
 
 	/**
@@ -379,8 +414,9 @@ public class Apps {
 			/**
 			 * functions
 			 */
-			public final adds<date> adds;
+			public final to to;
 			public final is is;
+			public final adds<date> adds;
 
 			/**
 			 * constructor
@@ -394,32 +430,9 @@ public class Apps {
 			 */
 			private date(Date value) {
 				this.value(value);
-				this.adds = new adds<date>();
+				this.to = new to();
 				this.is = new is();
-			}
-
-			/**
-			 * formats a <code>date</code> with a user/default locale and default name.
-			 * into a date string
-			 * @return String
-			 */
-			public String format() { return format(i18n.format.name.DATE); }
-			/**
-			 * formats a <code>date</code> with a user/default locale and pre-defined name or pattern.
-			 * into a date string
-			 * @param nameOrPattern String
-			 * @return String
-			 */
-			public String format(String nameOrPattern) { return format(null, nameOrPattern); }
-			/**
-			 * formats a <code>date</code> with a given locale and pre-defined name or pattern.
-			 * into a date string
-			 * @param localeCode String
-			 * @param nameOrPattern String
-			 * @return String
-			 */
-			public String format(String localeCode, String nameOrPattern) {
-				return FormatManager.dateFormatOf(localeCode, nameOrPattern).format(this.value());
+				this.adds = new adds<date>();
 			}
 
 			/**
@@ -429,7 +442,13 @@ public class Apps {
 			public int year() {
 				return(Dates.getYear(this.value()));
 			}
-
+			/**
+			 * returns the quarter of this <code>Apps.a.date</code>.
+			 * @return int
+			 */
+			public int quarter() {
+				return(Dates.getQuarter(this.value()));
+			}
 			/**
 			 * returns the natural month of this <code>Apps.a.date</code>.
 			 * @return int
@@ -454,6 +473,89 @@ public class Apps {
 					this.value = Date.from(this.l_value.atStartOfDay(ZoneId.systemDefault()).toInstant());
 				}
 				return(this);
+			}
+
+			/**
+			 * <code>to</code> function is to have this <code>Apps.a.date</code> to do something
+			 */
+			public class to {
+				/**
+				 * formats a <code>date</code> with a user/default locale and default name.
+				 * into a date string
+				 * @return String
+				 */
+				public String format() { return format(i18n.format.name.DATE); }
+				/**
+				 * formats a <code>date</code> with a user/default locale and pre-defined name or pattern.
+				 * into a date string
+				 * @param nameOrPattern String
+				 * @return String
+				 */
+				public String format(String nameOrPattern) { return format((String) null, nameOrPattern); }
+				/**
+				 * formats a <code>date</code> with a given locale and pre-defined name or pattern.
+				 * into a date string
+				 * @param locale <code>Apps.a.locale</code>
+				 * @param nameOrPattern String
+				 * @return String
+				 */
+				public String format(a.locale locale, String nameOrPattern) {
+					return format(locale.value(), nameOrPattern);
+				}
+				/**
+				 * formats a <code>date</code> with a given locale and pre-defined name or pattern.
+				 * into a date string
+				 * @param locale Locale
+				 * @param nameOrPattern String
+				 * @return String
+				 */
+				public String format(Locale locale, String nameOrPattern) {
+					return format(locale.toString(), nameOrPattern);
+				}
+				/**
+				 * formats a <code>date</code> with a given locale and pre-defined name or pattern.
+				 * into a date string
+				 * @param localeCode String
+				 * @param nameOrPattern String
+				 * @return String
+				 */
+				public String format(String localeCode, String nameOrPattern) {
+					return FormatManager.dateFormatOf(localeCode, nameOrPattern).format($this.value());
+				}
+			}
+
+			/**
+			 * <code>is</code> function is to check whether this <code>Apps.a.date</code>
+			 * is same, before or after that <code>Date</code>.
+			 */
+			public class is {
+
+				/**
+				 * check whether a <code>Apps.a.date</code> is after that <code>Date</code> 
+				 * ignoring time
+				 * @param that Date
+				 * @return boolean
+				 */
+				public boolean after(Date that) { return Dates.afterDate($this.value(), that); }
+				/**
+				 * check whether a <code>Apps.a.date</code> is before that <code>Date</code> 
+				 * ignoring time
+				 * @param that Date
+				 * @return boolean
+				 */
+				public boolean before(Date that) { return Dates.beforeDate($this.value(), that); }
+				/**
+				 * check whether a <code>Apps.a.date</code> is same with that <code>Date</code> 
+				 * ignoring time
+				 * @param that Date
+				 * @return boolean
+				 */
+				public boolean same(Date that) { return Dates.sameDate($this.value(), that); }
+				/**
+				 * check whether a <code>Apps.a.date</code> is weekend 
+				 * @return boolean
+				 */
+				public boolean weekend() { return Dates.isWeekend($this.value()); }
 			}
 
 			/**
@@ -496,43 +598,6 @@ public class Apps {
 			}
 
 			/**
-			 * <code>is</code> function is to check whether this <code>Apps.a.date</code>
-			 * is same, before or after that <code>Date</code>.
-			 */
-			public class is {
-
-				/**
-				 * check whether a <code>Apps.a.date</code> is after that <code>Date</code> 
-				 * ignoring time
-				 * @param that Date
-				 * @return boolean
-				 */
-				public boolean after(Date that) { return Dates.afterDate($this.value(), that); }
-
-				/**
-				 * check whether a <code>Apps.a.date</code> is before that <code>Date</code> 
-				 * ignoring time
-				 * @param that Date
-				 * @return boolean
-				 */
-				public boolean before(Date that) { return Dates.beforeDate($this.value(), that); }
-
-				/**
-				 * check whether a <code>Apps.a.date</code> is same with that <code>Date</code> 
-				 * ignoring time
-				 * @param that Date
-				 * @return boolean
-				 */
-				public boolean same(Date that) { return Dates.sameDate($this.value(), that); }
-
-				/**
-				 * check whether a <code>Apps.a.date</code> is weekend 
-				 * @return boolean
-				 */
-				public boolean weekend() { return Dates.isWeekend($this.value()); }
-			}
-
-			/**
 			 * <code>of</code> utility is for the specified date.
 			 */
 			public static class of {
@@ -544,12 +609,20 @@ public class Apps {
 					return(a.date(Dates.getDate(the.user.timezone())));
 				}
 				/**
-				 * returns the <code>Apps.a.date</code> of today in a given time zone
+				 * returns the <code>Apps.a.date</code> of today at the a given time zone
 				 * @param timezoneId String
 				 * @return <code>Apps.a.date</code>
 				 */
 				public static date today(String timezoneId) {
-					return(a.date(Dates.getDate(TimeZone.getTimeZone(timezoneId))));
+					return(today(TimeZone.getTimeZone(timezoneId)));
+				}
+				/**
+				 * returns the <code>Apps.a.date</code> of today at the given time zone
+				 * @param timezone TimeZone
+				 * @return <code>Apps.a.date</code>
+				 */
+				public static date today(TimeZone timezone) {
+					return(a.date(Dates.getDate(timezone)));
 				}
 			}
 
@@ -650,25 +723,24 @@ public class Apps {
 				 * @param date <code>Apps.a.date</code>
 				 * @return String
 				 */
-				public String format(a.date date) {
-					return format(date.value());
+				public String formats(a.date date) {
+					return formats(date.value());
 				}
 				/**
 				 * formats a <code>Date</code> into a date/time string
 				 * @param date Date
 				 * @return String
 				 */
-				public String format(Date date) {
+				public String formats(Date date) {
 					if (date == null) throw new IllegalArgumentException("Null argement.");
 					return this.value().format(date);
 				}
-
 				/**
 				 * parses text from the given string to produce a <code>Apps.a.date</code>
 				 * @param string String
 				 * @return <code>Apps.a.date</code>
 				 */
-				public date parse(String string) {
+				public date parses(String string) {
 					if (Strings.isEmpty(string)) throw new IllegalArgumentException("Null or empty argement.");
 					try {
 						return a.date(this.value().parse(string));
@@ -717,13 +789,14 @@ public class Apps {
 			/**
 			 * functions
 			 */
+			public final to to;
 			public adds<datetime> adds;
 
 			/**
 			 * constructor
 			 */
 			private datetime() {
-				super();
+				this(new Date());
 			}
 			/**
 			 * constructor
@@ -731,16 +804,10 @@ public class Apps {
 			 */
 			private datetime(Date value) {
 				this.value(value);
+				this.to = new to();
 				this.adds = new adds<datetime>();
 			}
 
-			/**
-			 * formats a <code>date</code> with a user/default locale and default name.
-			 * into a date/time string
-			 * @return String
-			 */
-			@Override
-			public String format() { return format(i18n.format.name.TIMESTAMP); }
 			
 			/**
 			 * sets the <code>Date</code> value
@@ -752,6 +819,25 @@ public class Apps {
 				this.value = Date.from(this.l_value.atZone(ZoneId.systemDefault()).toInstant());
 				return(this);
 			}
+
+			/**
+			 * <code>to</code> function is to have this <code>Apps.a.datetime</code> to do something
+			 */
+			public class to extends date.to {
+				/**
+				 * formats a <code>datetime</code> with a user/default locale and default name.
+				 * into a date/time string
+				 * @return String
+				 */
+				@Override
+				public String format() { return format(i18n.format.name.TIMESTAMP); }
+			}
+
+			/**
+			 * <code>is</code> function is to check whether this <code>Apps.a.datetime</code>
+			 * is same, before or after that <code>Date</code>.
+			 */
+			public class is extends date.is { }
 
 			/**
 			 * <code>adds</code> extends <code>Apps.a.date.adds</code>
@@ -785,12 +871,6 @@ public class Apps {
 				}
 			}
 
-			/**
-			 * <code>is</code> function is to check whether this <code>Apps.a.datetime</code>
-			 * is same, before or after that <code>Date</code>.
-			 */
-			public class is extends date.is { }
-			
 		}
 
 		/**
@@ -807,26 +887,20 @@ public class Apps {
 			/**
 			 * functions
 			 */
-			public adds<l_timestamp> adds;
+			public final to to;
 			public final is is;
+			public adds<l_timestamp> adds;
 			
 			/**
 			 * constructor
 			 */
 			private l_timestamp(Date value) {
 				this.value(value);
-				this.adds = new adds<l_timestamp>();
+				this.to = new to();
 				this.is = new is();
+				this.adds = new adds<l_timestamp>();
 			}
 
-			/**
-			 * formats a <code>date</code> with a user/default locale and default name.
-			 * into a date string
-			 * @return String
-			 */
-			@Override
-			public String format() { return format(i18n.format.name.LONGTIMESTAMP); }
-			
 			/**
 			 * sets the <code>Date</code> value
 			 * @param value Date
@@ -838,10 +912,18 @@ public class Apps {
 			}
 
 			/**
-			 * <code>adds</code> extends <code>Apps.a.datetime.adds</code>
-			 * to bind function onto <code>Apps.a.l_timestamp</code>.
+			 * <code>to</code> function is to have this <code>Apps.a.l_timestamp</code> to do something
 			 */
-			public class adds<S> extends datetime.adds<l_timestamp> { }
+			public class to extends datetime.to {
+
+				/**
+				 * formats a <code>l_timestamp</code> with a user/default locale and default name.
+				 * into a date/time string
+				 * @return String
+				 */
+				@Override
+				public String format() { return format(i18n.format.name.LONGTIMESTAMP); }
+			}
 
 			/**
 			 * <code>is</code> function is to check whether this <code>Apps.a.l_timestamp</code>
@@ -872,6 +954,12 @@ public class Apps {
 			}
 
 			/**
+			 * <code>adds</code> extends <code>Apps.a.datetime.adds</code>
+			 * to bind function onto <code>Apps.a.l_timestamp</code>.
+			 */
+			public class adds<S> extends datetime.adds<l_timestamp> { }
+
+			/**
 			 * <code>in</code> function is for the time zone 
 			 * that the date is in
 			 */
@@ -894,20 +982,33 @@ public class Apps {
 		/** application number */
 		public static class number {
 			/**
+			 * this <code>Apps.a.date</code>
+			 */
+			private number $this = this;
+
+			/**
 			 * the raw value of <code>number</code>
 			 */
 			protected Number value;
 
 			/**
+			 * functions
+			 */
+			public final to to;
+
+			/**
 			 * constructor
 			 */
-			private number() { }
+			private number() {
+				this(null);
+			}
 			/**
 			 * constructor
 			 * @param value Number
 			 */
 			private number(Number value) {
 				this.value(value);
+				this.to = new to();
 			}
 
 			/**
@@ -923,6 +1024,56 @@ public class Apps {
 			public number value(Number value) {
 				this.value = value;
 				return(this);
+			}
+
+			/**
+			 * <code>to</code> function is to have this <code>Apps.a.date</code> to do something
+			 */
+			public class to {
+
+				/**
+				 * formats a <code>number</code> with a user/default locale and default name.
+				 * into a number string
+				 * @return String
+				 */
+				public String format() { return format(i18n.format.name.NUMBER); }
+				/**
+				 * formats a <code>number</code> with a user/default locale and pre-defined name or pattern.
+				 * into a number string
+				 * @param nameOrPattern String
+				 * @return String
+				 */
+				public String format(String nameOrPattern) { return format((String) null, nameOrPattern); }
+				/**
+				 * formats a <code>number</code> with a given locale and pre-defined name or pattern.
+				 * into a number string
+				 * @param locale <code>Apps.a.locale</code>
+				 * @param nameOrPattern String
+				 * @return String
+				 */
+				public String format(a.locale locale, String nameOrPattern) {
+					return format(locale.value(), nameOrPattern);
+				}
+				/**
+				 * formats a <code>number</code> with a given locale and pre-defined name or pattern.
+				 * into a number string
+				 * @param locale Locale
+				 * @param nameOrPattern String
+				 * @return String
+				 */
+				public String format(Locale locale, String nameOrPattern) {
+					return format(locale.toString(), nameOrPattern);
+				}
+				/**
+				 * formats a <code>number</code> with a given locale and pre-defined name or pattern.
+				 * into a number string
+				 * @param localeCode String
+				 * @param nameOrPattern String
+				 * @return String
+				 */
+				public String format(String localeCode, String nameOrPattern) {
+					return FormatManager.dateFormatOf(localeCode, nameOrPattern).format($this.value());
+				}
 			}
 
 			/** application number format */
@@ -983,15 +1134,15 @@ public class Apps {
 				 * @param number <code>Apps.a.number</code>
 				 * @return String
 				 */
-				public String format(a.number number) {
-					return format(number.value());
+				public String formats(a.number number) {
+					return formats(number.value());
 				}
 				/**
 				 * formats a <code>Number</code> into a number string
 				 * @param number Number
 				 * @return String
 				 */
-				public String format(Number number) {
+				public String formats(Number number) {
 					if (number == null) throw new IllegalArgumentException("Null argument.");
 					return this.value().format(number);
 				}
@@ -1001,7 +1152,7 @@ public class Apps {
 				 * @param string String
 				 * @return <code>Apps.a.number</code>
 				 */
-				public number parse(String string) {
+				public number parses(String string) {
 					if (Strings.isEmpty(string)) throw new IllegalArgumentException("Null or empty argument.");
 					try {
 						return a.number(this.value().parse(string));
@@ -1275,6 +1426,66 @@ public class Apps {
 	 */
 	public static class the {
 
+		/** current fiscal utilities */
+		public static class fiscal {
+			/**
+			 * application config property
+			 */
+			private static final String APPCONF_FIRST_FISCALMONTH = AppConstants.APPCONF_FIRST_FISCALMONTH;
+			/**
+			 * returns the current fiscal year formatted at the given time zone
+			 * @param timezoneId String
+			 * @return String
+			 */
+			public static String year(String timezoneId) {
+				int soyMonth = Integer.parseInt((String) config.property(APPCONF_FIRST_FISCALMONTH));
+				return Apps.a.date.of.today(timezoneId).adds.months(1 - soyMonth).to.format(the.sys_default.locale(), i18n.format.name.FISCALYEAR);
+			}
+			/**
+			 * returns the current fiscal quarter at the given time zone
+			 * @param timezoneId String
+			 * @return Integer
+			 */
+			public static Integer quarter(String timezoneId) {
+				int soyMonth = Integer.parseInt((String) config.property(APPCONF_FIRST_FISCALMONTH));
+				return Apps.a.date.of.today(timezoneId).adds.months(1 - soyMonth).quarter();
+			}
+			/** fiscal months utilities */
+			public static class months {
+
+				/** fiscal months <code>in</code> functions */
+				public static class in {
+					/**
+					 * returns an array of the fiscal months in the given quarter
+					 * @param quarter
+					 * @return Integer[]
+					 */
+					public static Integer[] quarter(int quarter) {
+						Integer[] months = new Integer[3];
+						int soyMonth = Integer.parseInt((String) config.property(APPCONF_FIRST_FISCALMONTH));
+						Integer soqMonth = ((soqMonth = (quarter - 1) * 3 + soyMonth) > 12) ? soqMonth - 12 : soqMonth;
+						for (int i = 0, month = soqMonth; i < months.length;) {
+							months[i++] = month++;
+						}
+						return months;
+					}
+					/**
+					 * returns an array of the fiscal months in a year
+					 * @param quarter
+					 * @return Integer[]
+					 */
+					public static Integer[] year() {
+						Integer[] months = new Integer[12];
+						int soyMonth = Integer.parseInt((String) config.property(APPCONF_FIRST_FISCALMONTH));
+						for (int i = 0, month = soyMonth; i < months.length; i++, month++) {
+							months[i] = (month > 12 ? month - 12 : month) ;
+						}
+						return months;
+					}
+				}
+			}
+		}
+
 		/**
 		 * returns the current <code>User</code>
 		 * @return User
@@ -1282,6 +1493,17 @@ public class Apps {
 		public static User user() { return UserHolder.getUser(); }
 		/** current login user utilities */
 		public static class user {
+
+			/** user attribute utilities */
+			public static class attr {
+
+				/** user attribute name utilities */
+				public static class name {
+					/** constants for user attribute */
+					public static final String FISCAL_YEAR    = "ONE.KEY_USERATTRNAME_FISCALYEAR";
+					public static final String FISCAL_QUARTER = "ONE.KEY_USERATTRNAME_FISCALQUAR";
+				}
+			}
 			/**
 			 * returns the uuk of current login user
 			 * @return String
@@ -1309,9 +1531,14 @@ public class Apps {
 			public static TimeZone timezone() { return UserHolder.getUser().timezone(); }
 			/**
 			 * returns the country code of current login user
-			 * @return TimeZone
+			 * @return String
 			 */
 			public static String country() { return UserHolder.getUser().country(); }
+			/**
+			 * returns the user specified attribute
+			 * @return Object
+			 */
+			public static Object current(String attrName) { return UserHolder.getUser().attribute(attrName); }
 		}
 
 		/**
@@ -1543,32 +1770,6 @@ public class Apps {
 		}
 
 	}
-	
-	/**
-	 * application config utilities
-	 * 
-	 * @author Aranjuez
-	 * @since Pyrube-ONE 1.0
-	 */
-	public static class config {
-
-		/**
-		 * returns the given application property
-		 * @param propName the property name. it could be a slash (/) separated path if it is in a hierarchy. i.e. commProps/host
-		 * @return Object the value of the property. it could be String, List or Map.
-		 */
-		public static Object property(String propName) {
-			return AppConfig.getAppConfig().getAppProperty(propName);
-		}
-
-		/**
-		 * returns all application config properties
-		 * @return Map
-		 */
-		public static Map<String, ?> properties() {
-			return AppConfig.getAppConfig().getAppProperties();
-		}
-	}
 
 	/**
 	 * application event utilities
@@ -1624,6 +1825,10 @@ public class Apps {
 				public static final String TIME = FormatManager.DFN_TIME;
 				/** Date Format name of Short Time. i.e. "HH:mm" */
 				public static final String SHORTTIME = FormatManager.DFN_SHORTTIME;
+				/** Date Format name of Fiscal Year. i.e. "'FY'yy" */
+				public static final String FISCALYEAR = FormatManager.DFN_FISCALYEAR;
+				/** Number Format name of Number. i.e. "#.#" */
+				public static final String NUMBER = FormatManager.NFN_NUMBER;
 				/** Number Format name of Integer. i.e. "#0", "#,##0" */
 				public static final String INTEGER = FormatManager.NFN_INTEGER;
 				/** Number Format name of Float. i.e. "#0.0##############" */
@@ -1662,15 +1867,13 @@ public class Apps {
 	 * @since Pyrube-ONE 1.0
 	 */
 	public static class setup {
-		
 		/**
 		 * application config property
 		 */
-		private static final String APPCONF_DUALCONTROL = AppConstants.APPCONF_SETUP_DUALCONTROL;
+		private static final String APPCONF_SETUP_DUALCONTROL = AppConstants.APPCONF_SETUP_DUALCONTROL;
 
 		/** setup status utilities. */
 		public static class stat {
-
 			/** constants for setup status */
 			public static final String VERIFIED         = AppConstants.SETUP_STAT_VERIFIED;
 			public static final String CREATED_PENDING  = AppConstants.SETUP_STAT_CREATED_PENDING;
@@ -1679,18 +1882,16 @@ public class Apps {
 			public static final String UPDATED_REJECTED = AppConstants.SETUP_STAT_UPDATED_REJECTED;
 			public static final String DELETED_PENDING  = AppConstants.SETUP_STAT_DELETED_PENDING;
 			public static final String DELETED_REJECTED = AppConstants.SETUP_STAT_DELETED_REJECTED;
-			
 		}
 
 		/** <code>is</code> is for yes or no. */
 		public static class is {
-
 			/**
 			 * whether data setup need dual-control
 			 * @return boolean
 			 */
 			public static boolean dualcontrol() {
-				return Boolean.parseBoolean((String) Apps.config.property(setup.APPCONF_DUALCONTROL));
+				return Boolean.parseBoolean((String) config.property(APPCONF_SETUP_DUALCONTROL));
 			}
 			
 		}

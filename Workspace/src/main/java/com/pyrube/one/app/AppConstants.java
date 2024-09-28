@@ -32,22 +32,22 @@ public interface AppConstants {
 	/**
 	 * general constants
 	 */
-	public static final String YES     = "Y";
-	public static final String NO      = "N";
-	public static final String ADDED   = "A";
-	public static final String EDITED  = "E";
-	public static final String REMOVED = "R";
+	public static final String YES      = "Y";
+	public static final String NO       = "N";
 	
 	/**
 	 * constants for data setup status
 	 */
-	public static final String SETUP_STAT_VERIFIED = "V";
 	public static final String SETUP_STAT_CREATED_PENDING  = "C"; // created, but pending for verification
 	public static final String SETUP_STAT_CREATED_REJECTED = "J"; // created, but rejected by verifier
 	public static final String SETUP_STAT_UPDATED_PENDING  = "U"; // updated, but pending for verification
 	public static final String SETUP_STAT_UPDATED_REJECTED = "T"; // updated, but rejected by verifier
 	public static final String SETUP_STAT_DELETED_PENDING  = "D"; // deleted, but pending for verification
 	public static final String SETUP_STAT_DELETED_REJECTED = "N"; // deleted, but rejected by verifier
+	public static final String SETUP_STAT_VERIFIED = "V";
+	public static final String DATA_STAT_ADDED     = "A";
+	public static final String DATA_STAT_MODIFIED  = "M";
+	public static final String DATA_STAT_REMOVED   = "R";
 	/**
 	 * constants for data setup event
 	 */
