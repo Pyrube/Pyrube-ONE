@@ -116,6 +116,11 @@ public class FormatManager {
 	 * Date Format name of Short Time. i.e. "HH:mm"
 	 */
 	public static final String DFN_SHORTTIME = "shortTime";
+
+	/**
+	 * Date Format name of Fiscal Year. i.e. "'FY'yy"
+	 */
+	public static final String DFN_FISCALYEAR = "fiscalYear";
 	
 	/**
 	 * Number Format name of Number. i.e. "#.#"
