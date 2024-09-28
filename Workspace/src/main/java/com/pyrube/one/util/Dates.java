@@ -160,6 +160,16 @@ public class Dates {
 	}
 
 	/**
+	 * return quarter of a given date
+	 * @param date the given Date.
+	 * @return int
+	 */
+	public static int getQuarter(Date date) {
+		int month = getMonth(date);
+		return ((month - 1) / 3) + 1;
+	}
+
+	/**
 	 * return natural month of a given date
 	 * @param date the given Date.
 	 * @return int
@@ -387,10 +397,10 @@ public class Dates {
 		System.out.println(Apps.a.date().adds.days(2).adds.days(1).value());
 		System.out.println(Apps.a.datetime().adds.days(1).adds.hours(3).value());
 		System.out.println(new Date());
-		Apps.a.date.format.of(Apps.i18n.format.name.DATE).format(new Date());
+		Apps.a.date.format.of(Apps.i18n.format.name.DATE).formats(new Date());
 		System.out.println(Apps.a.datetime().is.weekend());
 		System.out.println(Apps.a.datetime().adds.days(4).is.weekend());
-		Apps.a.datetime().format();
+		Apps.a.datetime().to.format();
 	}
 
 }
